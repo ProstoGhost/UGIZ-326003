@@ -46,6 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Convertors.cs" />
+    <Compile Include="Data\Photo.cs" />
+    <Compile Include="Data\Pixel.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
