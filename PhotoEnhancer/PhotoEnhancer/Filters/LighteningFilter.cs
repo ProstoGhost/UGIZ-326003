@@ -34,5 +34,7 @@ namespace PhotoEnhancer
 
             return newPhoto;          
         }
+
+        public override string ToString() => "Осветление / Затемение";
     }
 }

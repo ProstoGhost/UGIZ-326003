@@ -13,6 +13,7 @@ namespace PhotoEnhancer
     public partial class MainForm : Form
     {
         Panel parametersPanel;
+        List<NumericUpDown> parameterControls;
 
         Photo originalPhoto;
         Photo resultPhoto;
@@ -20,8 +21,6 @@ namespace PhotoEnhancer
         public MainForm()
         {
             InitializeComponent();
-
-            filtersComboBox.Items.Add("Осветление/затемнение");
 
             var bmp = (Bitmap)Image.FromFile("cat.jpg");
             originalPhoto = Convertors.BitmapToPhoto(bmp);
@@ -45,14 +44,21 @@ namespace PhotoEnhancer
 
             this.Controls.Add(parametersPanel);
 
-            if(filtersComboBox.SelectedItem.ToString() == "Осветление/затемнение")
+            var filter = filtersComboBox.SelectedItem as IFilter;
+
+            if (filter == null) return;
+
+            parameterControls = new List<NumericUpDown>();
+            var parametersInfo = filter.GetParametersInfo();
+
+            for(var i = 0; i < parametersInfo.Length; i++)
             {
                 var label = new Label();
-                label.Left = 0;
-                label.Top = 0;
-                label.Width = parametersPanel.Width - 50;
                 label.Height = 28;
-                label.Text = "Коэффициент";
+                label.Left = 0;
+                label.Top = i * (label.Height + 10);
+                label.Width = parametersPanel.Width - 50;               
+                label.Text = parametersInfo[i].Name;
                 label.Font = new Font(label.Font.FontFamily, 10);
                 parametersPanel.Controls.Add(label);
 
@@ -62,44 +68,36 @@ namespace PhotoEnhancer
                 inputBox.Width = 45;
                 inputBox.Height = label.Height;
                 inputBox.Font = new Font(inputBox.Font.FontFamily, 10);
-                inputBox.Minimum = 0;
-                inputBox.Maximum = 10;
-                inputBox.Increment = (decimal)0.05;
+                inputBox.Minimum = (decimal)parametersInfo[i].MinValue;
+                inputBox.Maximum = (decimal)parametersInfo[i].MaxValue;
+                inputBox.Increment = (decimal)parametersInfo[i].Increment;
                 inputBox.DecimalPlaces = 2;
-                inputBox.Name = "coefficent";
-                inputBox.Value = 1;
+                inputBox.Value = (decimal)parametersInfo[i].DefaultValue;
                 parametersPanel.Controls.Add(inputBox);
+                parameterControls.Add(inputBox);
             }
         }
 
         private void applyButton_Click(object sender, EventArgs e)
         {
-            var newPhoto = new Photo(originalPhoto.Width, originalPhoto.Height);
+            var filter = filtersComboBox.SelectedItem as IFilter;
 
-            if (filtersComboBox.SelectedItem.ToString() == "Осветление/затемнение")
-            {
-                var k = (double)((parametersPanel.Controls["coefficent"] as NumericUpDown).Value);
+            if (filter == null) return;
 
-                for(var x = 0; x < originalPhoto.Width; x++)
-                    for(var y = 0; y < originalPhoto.Height; y++)
-                    {
-                        var pixelColor = originalPhoto[x, y];
+            var parameters = new double[parameterControls.Count];
 
-                        var newR = pixelColor.R * k;
-                        if(newR > 1) newR = 1;
+            for ( int i = 0; i < parameters.Length; i++)
+                parameters[i] = (double)parameterControls[i].Value;
 
-                        var newG = pixelColor.G * k;
-                        if (newG > 1) newG = 1;
-
-                        var newB = pixelColor.B * k;
-                        if (newB > 1) newB = 1;
-
-                        newPhoto[x, y] = new Pixel(newR, newG, newB);                      
-                    }               
-            }
-
-            resultPhoto = newPhoto;
+            resultPhoto = filter.Process(originalPhoto, parameters);
             resultPictureBox.Image = Convertors.PhotoToBitmap(resultPhoto);
+        }
+
+        public void AddFilter(IFilter filter)
+        {
+            if (filter == null) return;
+
+            filtersComboBox.Items.Add(filter);
         }
     }
 }

@@ -50,6 +50,7 @@
     <Compile Include="Data\Photo.cs" />
     <Compile Include="Data\Pixel.cs" />
     <Compile Include="Filters\IFilter.cs" />
+    <Compile Include="Filters\GrayScaleFilter.cs" />
     <Compile Include="Filters\LighteningFilter.cs" />
     <Compile Include="Filters\ParameterInfo.cs" />
     <Compile Include="MainForm.cs">

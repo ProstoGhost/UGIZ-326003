@@ -16,7 +16,13 @@ namespace PhotoEnhancer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var mainForm = new MainForm();
+
+            mainForm.AddFilter(new LighteningFilter());
+            mainForm.AddFilter(new  GrayScaleFilter());
+
+            Application.Run(mainForm);
         }
     }
 }
