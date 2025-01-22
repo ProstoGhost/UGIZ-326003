@@ -18,9 +18,12 @@ namespace PhotoEnhancer
                 {
                     var color = bmp.GetPixel(x, y);
 
-                    photo[x, y].R = color.R / 255.0;
-                    photo[x, y].G = color.G / 255.0;
-                    photo[x, y].B = color.B / 255.0;
+                    Pixel p = new Pixel(
+                        color.R / 255.0,
+                        color.G / 255.0,
+                        color.B / 255.0);
+
+                    photo[x, y] = p;
                 }
 
             return photo;
