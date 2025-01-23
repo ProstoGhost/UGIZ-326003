@@ -53,6 +53,7 @@
     <Compile Include="Filters\GrayScaleFilter.cs" />
     <Compile Include="Filters\LighteningFilter.cs" />
     <Compile Include="Filters\ParameterInfo.cs" />
+    <Compile Include="Filters\PixelFilter.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>

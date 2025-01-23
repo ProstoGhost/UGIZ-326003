@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace PhotoEnhancer
 {
-    public class LighteningFilter : IFilter
+    public class LighteningFilter : PixelFilter
     {
-        public ParameterInfo[] GetParametersInfo()
+        public override ParameterInfo[] GetParametersInfo()
         {
             return new[]
             {
@@ -24,15 +24,9 @@ namespace PhotoEnhancer
             };
         }
 
-        public Photo Process(Photo original, double[] parameters)
+        public override Pixel ProcessPixel(Pixel pixel, double[] parameters)
         {
-            var newPhoto = new Photo(original.Width, original.Height);
-
-            for (var x = 0; x < original.Width; x++)
-                for (var y = 0; y < original.Height; y++)
-                    newPhoto[x, y] = parameters[0] * original[x, y];
-
-            return newPhoto;          
+            return parameters[0] * pixel; ;
         }
 
         public override string ToString() => "Осветление / Затемение";
