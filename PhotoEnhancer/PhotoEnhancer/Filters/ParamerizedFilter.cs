@@ -6,20 +6,17 @@ using System.Threading.Tasks;
 
 namespace PhotoEnhancer.Filters
 {
-    public abstract class ParamerizedFilter : IFilter
+    public abstract class ParamerizedFilter<TParameters> : IFilter
+        where TParameters : IParameters, new()
     {
-        IParameters parameters;
-
-        public ParamerizedFilter(IParameters parameters) =>
-            this.parameters = parameters;
-
         public ParameterInfo[] GetParametersInfo() => 
-            parameters.GetDescription();
+            new TParameters().GetDescription();
 
-        abstract public Photo Process(Photo original, IParameters parameters);
+        abstract public Photo Process(Photo original, TParameters parameters);
 
         public Photo Process(Photo original, double[] values)
         {
+            var parameters = new TParameters();
             parameters.SetValues(values);
             return Process(original, parameters);
         }

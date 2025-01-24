@@ -7,13 +7,12 @@ using System.Windows.Forms;
 
 namespace PhotoEnhancer
 {
-    public class LighteningFilter : PixelFilter
+    public class LighteningFilter : PixelFilter<LighteningParameters>
     {
-        public LighteningFilter() : base(new LighteningParameters()) { }
          
-        public override Pixel ProcessPixel(Pixel pixel, IParameters parameters)
+        public override Pixel ProcessPixel(Pixel pixel, LighteningParameters parameters)
         {
-            return (parameters as LighteningParameters).Coefficient * pixel;
+            return parameters.Coefficient * pixel;
         }
 
         public override string ToString() => "Осветление / Затемение";

@@ -7,11 +7,10 @@ using System.Threading.Tasks;
 
 namespace PhotoEnhancer
 {
-    public abstract class PixelFilter : ParamerizedFilter
+    public abstract class PixelFilter<TParameters> : ParamerizedFilter<TParameters>
+        where TParameters : IParameters, new()
     {
-        public PixelFilter(IParameters parameters) : base(parameters) { }
-
-        public override Photo Process(Photo original, IParameters parameters)
+        public override Photo Process(Photo original, TParameters parameters)
         {
             var newPhoto = new Photo(original.Width, original.Height);
 
@@ -22,6 +21,6 @@ namespace PhotoEnhancer
             return newPhoto;
         }
 
-        public abstract Pixel ProcessPixel(Pixel pixel, IParameters parameters);
+        public abstract Pixel ProcessPixel(Pixel pixel, TParameters parameters);
     }
 }

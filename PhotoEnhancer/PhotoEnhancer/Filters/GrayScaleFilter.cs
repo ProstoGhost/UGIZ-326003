@@ -7,11 +7,9 @@ using System.Windows.Forms;
 
 namespace PhotoEnhancer
 {
-    public class GrayScaleFilter : PixelFilter
+    public class GrayScaleFilter : PixelFilter<EmptyParameters>
     {
-        public GrayScaleFilter() : base(new EmptyParameters()) { }
-
-        public override Pixel ProcessPixel(Pixel pixel, IParameters parameters)
+        public override Pixel ProcessPixel(Pixel pixel, EmptyParameters parameters)
         {
             var lightness = pixel.R * 0.3 + pixel.G * 0.6 + pixel.B * 0.1;
 
