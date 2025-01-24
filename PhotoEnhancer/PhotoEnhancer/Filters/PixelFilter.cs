@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PhotoEnhancer.Filters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace PhotoEnhancer
 {
-    public abstract class PixelFilter : IFilter
+    public abstract class PixelFilter : ParamerizedFilter
     {
-        public abstract ParameterInfo[] GetParametersInfo();
-        public Photo Process(Photo original, double[] parameters)
+        public PixelFilter(IParameters parameters) : base(parameters) { }
+
+        public override Photo Process(Photo original, IParameters parameters)
         {
             var newPhoto = new Photo(original.Width, original.Height);
 
@@ -20,6 +22,6 @@ namespace PhotoEnhancer
             return newPhoto;
         }
 
-        public abstract Pixel ProcessPixel(Pixel pixel, double[] parameters);
+        public abstract Pixel ProcessPixel(Pixel pixel, IParameters parameters);
     }
 }

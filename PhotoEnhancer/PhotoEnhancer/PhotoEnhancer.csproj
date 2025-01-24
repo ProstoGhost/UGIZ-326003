@@ -49,9 +49,13 @@
     <Compile Include="Data\Convertors.cs" />
     <Compile Include="Data\Photo.cs" />
     <Compile Include="Data\Pixel.cs" />
+    <Compile Include="Filters\EmptyParameters.cs" />
     <Compile Include="Filters\IFilter.cs" />
     <Compile Include="Filters\GrayScaleFilter.cs" />
+    <Compile Include="Filters\IParameters.cs" />
     <Compile Include="Filters\LighteningFilter.cs" />
+    <Compile Include="Filters\LighteningParameters.cs" />
+    <Compile Include="Filters\ParamerizedFilter.cs" />
     <Compile Include="Filters\ParameterInfo.cs" />
     <Compile Include="Filters\PixelFilter.cs" />
     <Compile Include="MainForm.cs">

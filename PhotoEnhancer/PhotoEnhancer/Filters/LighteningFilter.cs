@@ -9,24 +9,11 @@ namespace PhotoEnhancer
 {
     public class LighteningFilter : PixelFilter
     {
-        public override ParameterInfo[] GetParametersInfo()
+        public LighteningFilter() : base(new LighteningParameters()) { }
+         
+        public override Pixel ProcessPixel(Pixel pixel, IParameters parameters)
         {
-            return new[]
-            {
-                new ParameterInfo()
-                {
-                    Name = "Коэффициент",
-                    MinValue = 0,
-                    MaxValue = 10,
-                    DefaultValue = 1,
-                    Increment = 0.05
-                }
-            };
-        }
-
-        public override Pixel ProcessPixel(Pixel pixel, double[] parameters)
-        {
-            return parameters[0] * pixel; ;
+            return (parameters as LighteningParameters).Coefficient * pixel;
         }
 
         public override string ToString() => "Осветление / Затемение";
