@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace PhotoEnhancer.Filters
 {
-    public abstract class ParamerizedFilter<TParameters> : IFilter
+    public abstract class ParametrizedFilter<TParameters> : IFilter
         where TParameters : IParameters, new()
     {
         public string name;

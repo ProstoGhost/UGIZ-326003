@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PhotoEnhancer
 {
-    public class PixelFilter<TParameters> : ParamerizedFilter<TParameters>
+    public class PixelFilter<TParameters> : ParametrizedFilter<TParameters>
         where TParameters : IParameters, new()
     {
 
