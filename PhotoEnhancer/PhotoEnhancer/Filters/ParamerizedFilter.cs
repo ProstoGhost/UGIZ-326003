@@ -9,6 +9,7 @@ namespace PhotoEnhancer.Filters
     public abstract class ParamerizedFilter<TParameters> : IFilter
         where TParameters : IParameters, new()
     {
+        public string name;
         public ParameterInfo[] GetParametersInfo() => 
             new TParameters().GetDescription();
 
@@ -20,5 +21,7 @@ namespace PhotoEnhancer.Filters
             parameters.SetValues(values);
             return Process(original, parameters);
         }
+
+        public override string ToString() => name;
     }
 }
